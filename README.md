@@ -1,24 +1,60 @@
-# CLAUDE.md
+# MCP Server WebTools
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+An MCP (Model Context Protocol) server that provides web automation tools using FastAPI, FastMCP, and Playwright. The server exposes web browsing capabilities as MCP tools for AI assistants.
 
-## Project Overview
+## Installation
 
-This is an MCP (Model Context Protocol) server that provides web automation tools using FastAPI, FastMCP, and Playwright. The server exposes web browsing capabilities as MCP tools for AI assistants.
+### Clone the Repository
+
+```bash
+git clone https://github.com/Imag2020/mcp-server-webtools.git
+cd mcp-server-webtools
+```
+
+### Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### Install Playwright Browsers
+
+```bash
+playwright install
+```
 
 ## Running the Server
 
 ```bash
+cd src
 python mcp-wetools.py
 ```
 
 The server runs on `http://0.0.0.0:8000` and provides:
-- SSE endpoint at `/sse` for real-time communication
-- Message endpoint at `/messages` for MCP protocol
+- **SSE endpoint**: `http://0.0.0.0:8000/sse` for real-time communication
+- **Message endpoint**: `http://0.0.0.0:8000/messages` for MCP protocol
+
+## MCP Client Configuration
+
+To use this server as an MCP client, configure your MCP client with:
+
+```json
+{
+  "mcpServers": {
+    "webtools": {
+      "command": "python",
+      "args": ["path/to/mcp-server-webtools/src/mcp-wetools.py"],
+      "env": {}
+    }
+  }
+}
+```
+
+Or use the SSE endpoint directly: `http://0.0.0.0:8000/sse`
 
 ## Architecture
 
-**Single-file architecture**: The entire MCP server is contained in `mcp-wetools.py`
+**Single-file architecture**: The entire MCP server is contained in `src/mcp-wetools.py`
 
 **Core Components**:
 - **Browser Management**: Global Playwright browser instance with lifecycle management
